@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PhysicsLab
 {
-	public class RopeSolver : MonoBehaviour {
+	public class RopePBDSolver : MonoBehaviour {
 		public Transform ParticlePrefab;
 		public int Count = 3;
 		public int Space = 1;
