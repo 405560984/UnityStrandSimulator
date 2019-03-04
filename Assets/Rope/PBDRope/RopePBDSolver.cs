@@ -29,7 +29,7 @@ namespace PhysicsLab
 
 				// Construct Particles
 				var particle = new Particle();
-                particle.invMass = 1;// i == 0 ? 0 : 1; // 0 means Mass is infinite
+                particle.invMass = i == 0 ? 0 : 1; // 0 means Mass is infinite
                 particle.radius = 0.5f * Space;
 				particle.pos = particle.prevPos = new Vector3(0, -i * Space, 0);
 				particle.velocity = Vector3.zero;
@@ -64,8 +64,9 @@ namespace PhysicsLab
                     //particleList[i].pos = particleList[i-1].pos + Space * offsetToParent.normalized;
                     // Strategy 2: Position Based Dynamics, iteratively
                     offsetToParent = Space * offsetToParent.normalized - offsetToParent;
-                    particleList[i - 1].pos -=  0.5f * offsetToParent;
-                    particleList[i].pos += 0.5f * offsetToParent;
+                    float invMassSum = particleList[i - 1].invMass + particleList[i].invMass;
+                    particleList[i - 1].pos -=  particleList[i -1].invMass / invMassSum * offsetToParent;
+                    particleList[i].pos += particleList[i].invMass / invMassSum * offsetToParent;
                 }
 
                 //for (int i = 2; i < Count; i += 2)

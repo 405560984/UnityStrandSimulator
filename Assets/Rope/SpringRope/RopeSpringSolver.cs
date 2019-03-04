@@ -17,9 +17,6 @@ namespace PhysicsLab
 
         public Vector3 ExternForce = Vector3.zero;
 
-        [Header("Collider")]
-        public RopeSphereCollider sphereCollider;
-
         private List<Transform> chain = new List<Transform>();
         private List<SpringParticle> particleList = new List<SpringParticle>();
 
@@ -35,7 +32,7 @@ namespace PhysicsLab
                 var particle = new SpringParticle();
                 particle.invMass = 1;
                 particle.radius = 0.5f * Space;
-                particle.pos = particle.prevPos = new Vector3(0, -i * Space, 0);
+                particle.pos = new Vector3(0, -i * Space, 0);
                 particle.velocity = Vector3.zero;
                 particleList.Add(particle);
             }
@@ -43,7 +40,7 @@ namespace PhysicsLab
 
         void FixedUpdate()
         {
-            float dt = Time.fixedDeltaTime;
+            float dt = Time.fixedDeltaTime / SubStepCount;
 
             // Update Particle Position
             // Root Particle follow Transform
@@ -67,9 +64,11 @@ namespace PhysicsLab
                     }
 
                     // Update Particle Position according to Newton's 2nd Law
+                    particle.pos += (1 - Damping) * particle.velocity * dt;
+
+                    // Update velocity
                     Vector3 acceleration = (springForce + ExternForce - AirResistanceRatio * particle.velocity.magnitude * particle.velocity) * particle.invMass;
                     particle.velocity += acceleration * dt;
-                    particle.pos += (1 - Damping) * particle.velocity * dt;
                 }
             }
 
@@ -99,7 +98,6 @@ namespace PhysicsLab
         public float invMass; // 1 / mass
         public float radius;
         public Vector3 pos;
-        public Vector3 prevPos;
         public Vector3 velocity;
     }
 }
