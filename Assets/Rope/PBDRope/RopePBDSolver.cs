@@ -84,17 +84,17 @@ namespace PhysicsLab
                 //}
 
                 // Bend Constraint
-                for (int i=1; i<Count-1; i++)
-                {
-                    Particle lastP = particleList[i - 1];
-                    Particle cP = particleList[i];
-                    Particle nextP = particleList[i + 1];
+                //for (int i=1; i<Count-1; i++)
+                //{
+                //    Particle lastP = particleList[i - 1];
+                //    Particle cP = particleList[i];
+                //    Particle nextP = particleList[i + 1];
 
-                    //Vector3 
-                }
+                //    //Vector3 
+                //}
 
                 // Attach Root Particle to base transform
-                particleList[0].pos = transform.position;
+                //particleList[0].pos = transform.position;
             }
 
             // 1. Attach Root Particle to base transform
